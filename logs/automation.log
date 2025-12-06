@@ -1,0 +1,42 @@
+11:33:10.647 [main] INFO  testCases.TC002_LoginTest - ***** Starting TC_002_LoginTest *****
+11:33:10.762 [main] INFO  testCases.TC001_AccountRegistrationTestb - **** TC001_AccountRegistrationTestb ****
+11:33:46.183 [main] DEBUG org.testng.TestNG - suiteXmlPath: "C:\Automation\Myworkspaces\Seleniumwebdriver\opencartv121\grid_docker.xml"
+11:33:46.304 [main] INFO  org.testng.internal.Utils - [XmlSuite] [WARN] 'parallel' value 'false' is no longer valid, defaulting to 'none'.
+11:33:46.595 [main] INFO  org.testng.internal.Utils - [TestNG] Running:
+  C:\Automation\Myworkspaces\Seleniumwebdriver\opencartv121\grid_docker.xml
+
+11:36:59.133 [main] INFO  testCases.TC002_LoginTest - ***** Starting TC_002_LoginTest *****
+11:36:59.218 [main] INFO  testCases.TC001_AccountRegistrationTestb - **** TC001_AccountRegistrationTestb ****
+11:49:23.852 [main] DEBUG org.testng.TestNG - suiteXmlPath: "C:\Automation\Myworkspaces\Seleniumwebdriver\opencartv121\grid_docker.xml"
+11:49:23.955 [main] INFO  org.testng.internal.Utils - [XmlSuite] [WARN] 'parallel' value 'false' is no longer valid, defaulting to 'none'.
+11:49:24.215 [main] INFO  org.testng.internal.Utils - [TestNG] Running:
+  C:\Automation\Myworkspaces\Seleniumwebdriver\opencartv121\grid_docker.xml
+
+12:53:18.967 [main] INFO  testCases.TC002_LoginTest - ***** Starting TC_002_LoginTest *****
+12:53:19.237 [main] INFO  testCases.TC001_AccountRegistrationTestb - **** TC001_AccountRegistrationTestb ****
+13:56:05.124 [main] DEBUG org.testng.TestNG - suiteXmlPath: "C:\Automation\Myworkspaces\Seleniumwebdriver\opencartv121\master.xml"
+13:56:05.415 [main] INFO  org.testng.internal.Utils - [TestNG] Running:
+  C:\Automation\Myworkspaces\Seleniumwebdriver\opencartv121\master.xml
+
+13:56:48.428 [main] DEBUG org.testng.TestNG - suiteXmlPath: "C:\Automation\Myworkspaces\Seleniumwebdriver\opencartv121\master.xml"
+13:56:48.741 [main] INFO  org.testng.internal.Utils - [TestNG] Running:
+  C:\Automation\Myworkspaces\Seleniumwebdriver\opencartv121\master.xml
+
+13:57:46.162 [main] DEBUG org.testng.TestNG - suiteXmlPath: "C:\Automation\Myworkspaces\Seleniumwebdriver\opencartv121\master.xml"
+13:57:46.429 [main] INFO  org.testng.internal.Utils - [TestNG] Running:
+  C:\Automation\Myworkspaces\Seleniumwebdriver\opencartv121\master.xml
+
+14:30:32.574 [main] DEBUG org.testng.TestNG - suiteXmlPath: "C:\Automation\Myworkspaces\Seleniumwebdriver\opencartv121\master.xml"
+14:48:14.975 [main] DEBUG org.testng.TestNG - suiteXmlPath: "C:\Automation\Myworkspaces\Seleniumwebdriver\opencartv121\master.xml"
+14:48:15.360 [main] INFO  org.testng.internal.Utils - [TestNG] Running:
+  C:\Automation\Myworkspaces\Seleniumwebdriver\opencartv121\master.xml
+
+14:55:53.402 [main] DEBUG org.testng.TestNG - suiteXmlPath: "C:\Automation\Myworkspaces\Seleniumwebdriver\opencartv121\master.xml"
+14:55:53.705 [main] INFO  org.testng.internal.Utils - [TestNG] Running:
+  C:\Automation\Myworkspaces\Seleniumwebdriver\opencartv121\master.xml
+
+15:00:00.121 [main] DEBUG org.testng.TestNG - suiteXmlPath: "C:\Automation\Myworkspaces\Seleniumwebdriver\opencartv121\grouping.xml"
+15:00:00.412 [main] INFO  org.testng.internal.Utils - [TestNG] Running:
+  C:\Automation\Myworkspaces\Seleniumwebdriver\opencartv121\grouping.xml
+
+15:11:53.003 [main] DEBUG org.testng.TestNG - suiteXmlPath: "C:\Automation\Myworkspaces\Seleniumwebdriver\opencartv121\master.xml"
