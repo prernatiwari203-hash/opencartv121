@@ -23,7 +23,6 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
 
 public class BaseClass {
@@ -32,53 +31,54 @@ public class BaseClass {
     public Logger logger;
     public Properties p;
 
-    @BeforeClass
+    @BeforeClass(alwaysRun = true)
     @Parameters({"os", "browser"})
-    public void setup(
-            @Optional("windows") String os,
-            @Optional("chrome") String browser) throws IOException {
+    public void setup(String os, String br) throws IOException {
 
-        // load config
+        // Load config.properties
         FileReader file = new FileReader("./src/test/resources/config.properties");
         p = new Properties();
         p.load(file);
 
         logger = LogManager.getLogger(this.getClass());
 
-        // ===== REMOTE EXECUTION =====
-        if (p.getProperty("execution_env").equalsIgnoreCase("remote")) {
+        String env = p.getProperty("execution_env");
 
-            DesiredCapabilities caps = new DesiredCapabilities();
+        if (env.equalsIgnoreCase("remote")) {
 
+            DesiredCapabilities cap = new DesiredCapabilities();
+
+            // OS
             if (os.equalsIgnoreCase("windows")) {
-                caps.setPlatform(Platform.WIN11);
+                cap.setPlatform(Platform.WIN11);
             } else if (os.equalsIgnoreCase("mac")) {
-                caps.setPlatform(Platform.MAC);
+                cap.setPlatform(Platform.MAC);
             } else {
                 throw new RuntimeException("Invalid OS");
             }
 
-            switch (browser.toLowerCase()) {
+            // Browser
+            switch (br.toLowerCase()) {
                 case "chrome":
-                    caps.setBrowserName("chrome");
+                    cap.setBrowserName("chrome");
                     break;
                 case "edge":
-                    caps.setBrowserName("MicrosoftEdge");
+                    cap.setBrowserName("MicrosoftEdge");
                     break;
                 case "firefox":
-                    caps.setBrowserName("firefox");
+                    cap.setBrowserName("firefox");
                     break;
                 default:
                     throw new RuntimeException("Invalid Browser");
             }
 
             driver = new RemoteWebDriver(
-                    new URL("http://localhost:4444/wd/hub"), caps);
+                    new URL("http://localhost:4444/wd/hub"), cap);
         }
 
-        // ===== LOCAL EXECUTION =====
-        else {
-            switch (browser.toLowerCase()) {
+        else if (env.equalsIgnoreCase("local")) {
+
+            switch (br.toLowerCase()) {
                 case "chrome":
                     driver = new ChromeDriver();
                     break;
@@ -93,6 +93,10 @@ public class BaseClass {
             }
         }
 
+        else {
+            throw new RuntimeException("Invalid execution_env in properties file");
+        }
+
         driver.manage().deleteAllCookies();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.manage().window().maximize();
@@ -103,10 +107,12 @@ public class BaseClass {
     public void tearDown() {
         if (driver != null) {
             driver.quit();
+            driver = null;
         }
     }
 
-    // ===== Utilities =====
+    // ================== Utilities ==================
+
     public String randomString() {
         return RandomStringUtils.randomAlphabetic(5);
     }
@@ -116,19 +122,38 @@ public class BaseClass {
     }
 
     public String randomAlphaNumeric() {
-        return RandomStringUtils.randomAlphabetic(3) + "@" +
-               RandomStringUtils.randomNumeric(3);
+        return RandomStringUtils.randomAlphabetic(3) + "@"
+                + RandomStringUtils.randomNumeric(3);
     }
 
-    public String captureScreen(String tname) throws IOException {
-        String timeStamp = new SimpleDateFormat("yyyyMMddhhmmss").format(new Date());
-        TakesScreenshot ts = (TakesScreenshot) driver;
-        File src = ts.getScreenshotAs(OutputType.FILE);
-        String path = System.getProperty("user.dir") +
-                "\\screenshots\\" + tname + "_" + timeStamp + ".png";
-        File dest = new File(path);
-        src.renameTo(dest);
-        return path;
+    // ================== Screenshot (NULL SAFE) ==================
+
+    public String captureScreen(String testName) {
+
+        try {
+            if (driver == null) {
+                System.out.println("Driver is NULL. Screenshot skipped.");
+                return null;
+            }
+
+            TakesScreenshot ts = (TakesScreenshot) driver;
+
+            String timeStamp =
+                    new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+
+            File source = ts.getScreenshotAs(OutputType.FILE);
+
+            String targetPath = System.getProperty("user.dir")
+                    + "/screenshots/" + testName + "_" + timeStamp + ".png";
+
+            File target = new File(targetPath);
+            source.renameTo(target);
+
+            return targetPath;
+
+        } catch (Exception e) {
+            System.out.println("Screenshot failed: " + e.getMessage());
+            return null;
+        }
     }
 }
-

@@ -9,45 +9,44 @@ import pageObjects.MyAccountPage;
 import testBase.BaseClass;
 
 public class TC002_LoginTest extends BaseClass {
-	
-	
-	@Test(groups ={"Sanity" , "Master"})
-	public void verify_login()
-	{
-		logger.info("***** Starting TC_002_LoginTest *****");
-		
-		try
-		{
-		
-		//HomePage
-		
-		HomePage hp =new HomePage(driver);
-		hp.clickMyAccount();
-		hp.linkLogin();
-		
-		//LoginPage
-		
-		LoginPage lp =new LoginPage (driver);
-		lp.setEmail(p.getProperty("email"));
-		lp.setPassword(p.getProperty("password"));
-		lp.clickLogin();
-		
-		//MyAccount
-		
-		MyAccountPage macc = new MyAccountPage(driver);
-		boolean targetPage = macc.isMyAccountPageExists();
-		
-		
-		Assert.assertTrue(targetPage); //Assert.assertEquals(targetPage, true, "Login Failed");
-		}
-		
-		catch(Exception e)
-		{
-			Assert.fail();
-		}
-		logger.info("**** Finished Login Test *****");
-		
-	}
-	
 
+    @Test(groups = {"Sanity", "Master"})
+    public void verify_login() {
+
+        logger.info("***** TC002_LoginTest STARTED *****");
+
+        try {
+
+            // Home Page
+            HomePage hp = new HomePage(driver);
+            hp.clickMyAccount();
+            logger.info("Clicked on MyAccount");
+
+            hp.linkLogin();
+            logger.info("Clicked on Login link");
+
+            // Login Page
+            LoginPage lp = new LoginPage(driver);
+            lp.setEmail(p.getProperty("email"));
+            lp.setPassword(p.getProperty("password"));
+            lp.clickLogin();
+
+            logger.info("Login submitted");
+
+            // My Account Page
+            MyAccountPage macc = new MyAccountPage(driver);
+            boolean isMyAccountDisplayed = macc.isMyAccountPageExists();
+
+            Assert.assertTrue(
+                    isMyAccountDisplayed,
+                    "Login failed - My Account page not displayed"
+            );
+
+        } catch (Exception e) {
+            logger.error("❌ Login Test Failed", e);
+            Assert.fail(e.getMessage());
+        }
+
+        logger.info("***** TC002_LoginTest FINISHED *****");
+    }
 }

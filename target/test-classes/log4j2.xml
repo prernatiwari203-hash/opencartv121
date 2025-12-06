@@ -1,25 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <Configuration status="INFO">
+    
+    <!-- Define reusable properties -->
     <Properties>
         <Property name="basePath">./logs</Property>
+        <Property name="logPattern">%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n</Property>
+        <Property name="maxFileSize">10MB</Property>
+        <Property name="maxBackupDays">7</Property>
     </Properties>
 
+    <!-- Appenders -->
     <Appenders>
+
+        <!-- Console Appender -->
         <Console name="Console" target="SYSTEM_OUT">
-            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+            <PatternLayout pattern="${logPattern}"/>
         </Console>
 
-        <RollingFile name="File" fileName="${basePath}/automation.log" filePattern="${basePath}/automation-%d{yyyy-MM-dd}.log.gz">
-            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
-            <SizeBasedTriggeringPolicy size="5000" />
+        <!-- Rolling File Appender -->
+        <RollingFile name="File"
+                     fileName="${basePath}/automation.log"
+                     filePattern="${basePath}/automation-%d{yyyy-MM-dd}-%i.log.gz">
+
+            <PatternLayout pattern="${logPattern}"/>
+
+            <!-- Roll over when file reaches max size -->
+            <Policies>
+                <SizeBasedTriggeringPolicy size="${maxFileSize}"/>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+
+            <!-- Keep only last N rolled files -->
+            <DefaultRolloverStrategy max="${maxBackupDays}"/>
         </RollingFile>
+
     </Appenders>
 
+    <!-- Loggers -->
     <Loggers>
+
+        <!-- Root logger -->
         <Root level="debug">
-            <!-- Here you can use multiple log levels All < Trace < Debug < Info < Warn < Error < Fatal -->
-            <!-- <AppenderRef ref="Console"/> -->
-            <AppenderRef ref="File"/> 
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="File"/>
         </Root>
+
     </Loggers>
 
 </Configuration>
